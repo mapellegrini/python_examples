@@ -22,11 +22,13 @@ for date in [date1, date2, date3]:
 
 print "\nDatetimes:" 
 for datetime in [datetime1, datetime2, datetime3]:
-  print datetime
+  print datetime, datetime.strftime("%d-%b-%Y"), datetime.isoformat()
+
 
 print "\nDeltas:"
 for delta in [delta1, delta2, delta3]:
   print delta
+
 
 
 
