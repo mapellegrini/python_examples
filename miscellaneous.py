@@ -29,7 +29,18 @@ print "filter(lambda x: x<0, lst3)=", negs
 product=reduce ((lambda x, y: x*y), lst1)
 print "reduce ((lambda x, y: x*y), lst1)=", product
 
-mysumfunc=functools.partial(reduce, (lambda x,y: x+y)) #defining a partial function which sums a given list
-print "mysumfunc(lst1)=", mysumfunc(lst1)
+def printlist(start, end, quitval):
+  for a in range (start, end):
+    print a,
+    if (a==quitval):
+      print "quit"
+      break
+  else:
+    print "Reached the end of the list"
 
+printlist(0, 10, 5)
+printlist(0, 10, 11)
 
+printlist_partialfunc=functools.partial(printlist, 0, 10)
+printlist_partialfunc(5)
+printlist_partialfunc(11)
