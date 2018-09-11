@@ -28,6 +28,7 @@ for datetime in [datetime1, datetime2, datetime3]:
 print "\nDeltas:"
 for delta in [delta1, delta2, delta3]:
   print delta
+  print delta.days, delta.seconds, delta.microseconds
 
 
 
