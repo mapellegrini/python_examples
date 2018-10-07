@@ -20,14 +20,14 @@ print "' '.join(strlst)=", jn
 zp=zip(lst1, lst2, strlst)
 print "zp= zip(lst1, lst2, strlst) =", zp
 
-zp.sort(key=lambda x:x[1])
+zp.sort(key=lambda x:x[1]) #tells sort to use the second element in each list element 
 print "zp.sort(key=lambda x:x[1])=", zp
 
 lst3=range(5, -5, -1)
 print "lst3=", lst3
 
 #lambda 
-negs=filter(lambda x: x<0, lst3)
+negs=filter(lambda x: x<0, lst3) 
 print "filter(lambda x: x<0, lst3)=", negs
 
 #reduce 
@@ -42,7 +42,7 @@ def printlist(start, end, quitval):
     if (a==quitval):
       print "quit"
       break
-  else:
+  else: #executed if the for loop ends (breaks) early 
     print "Reached the end of the list"
 
 printlist(0, 10, 5)
@@ -62,3 +62,16 @@ except:
   print "Whoops, something went wrong" 
 else:
   print "Nothing went wrong"
+
+#list comprehensions 
+nums=range(0, 10)
+squares=[i**2 for i in nums] #simple 
+print "First 10 square numbers:", squares
+
+evens=[i for i in nums if i%2==0] #conditional 
+print "First 5 even numbers:", evens
+
+filterlist=[i if i%2==0 else 0 if i%3==0 else -1 for i in nums] #conditional with if/else
+print "Filtered list=", filterlist
+
+
