@@ -39,5 +39,21 @@ teststr3="Going Going03 going99 going104"
 results=re.findall("going[0-9]*", teststr3, re.M|re.I) 
 #re.M means the input is (could be) multi-line
 #re.I means ignore case
-
 print results
+
+
+regex="key"
+targetstring1 = "The key is to keyin on keys that keyword keykeykey"
+targetstring2 = "The magic phrase does not appear in this string"
+pattern = re.compile(regex)
+searchfunc1 = pattern.search(targetstring1)
+searchfunc2 = pattern.search(targetstring2)
+
+
+if (searchfunc1 != None): #the pattern exists in the string
+   print regex, "was found in target string", targetstring1
+
+if (searchfunc2 == None): #the pattern does not exist in the string
+   print regex, "was not found in the targetstring", targetstring2
+
+   
