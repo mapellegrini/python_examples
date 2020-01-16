@@ -1,6 +1,15 @@
 #!/usr/bin/python
 
 import functools 
+import getpass 
+import sys 
+
+username = getpass.getuser()
+if (username == "root"):
+  print "You shouldn't run this as root"
+else:
+  print "You're not root. That's good"  
+
 
 lst1=[1, 2, 3, 4]
 lst2=[40, 30, 20, 10]
