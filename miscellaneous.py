@@ -84,3 +84,14 @@ filterlist=[i if i%2==0 else 0 if i%3==0 else -1 for i in nums] #conditional wit
 print "Filtered list=", filterlist
 
 
+#underscores are used when the programmer doesn't care about a value
+for _ in range(0, 3):
+  print "Hi!"
+[x, _, z] = "Hello. Cat. Moose".split(".")
+
+
+
+#an asterisk is used to convert a list into comma-seperated parameters in a function call 
+def add4(a, b, c, d):
+  return a+b+c+d
+print add4(*[1, 2, 3, 4])
