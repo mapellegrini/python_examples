@@ -3,6 +3,7 @@
 from re import split as regexsplit
 import math 
 from inspect import getmembers, isbuiltin 
+import operator
 
 operators = r"><+()*/^".split()
 delims = r'(>+|<+|\++|[A-Z, a-z]*\(+|\)+|/+|\*+|\^+|)'
@@ -24,8 +25,7 @@ def isnum(val):
         float(val)
     except ValueError:
         return False
-    finally:
-        return True 
+    return True 
 
 def gettoktype(token):
     if (isnum(tok)):
@@ -41,14 +41,62 @@ def gettoktype(token):
     else: #unknown variable 
         return "var" 
 
+def str2func(mylst):
+    print "processing:", mylst
+    hasvar=False
+    for tok in mylst:
+        if (gettoktype(tok)=="var"):
+            hasvar=True
+            break
+    if (hasvar):
+       print mylst        
+    else:
+        eqstr="".join(mylst)
+        result=eval(eqstr)
+        print "Returning", result
+        return str(result)
+
     
-eqstr="5*cos(4+4)/arctan(4*5)^(2+2)"
+eqstr="5*cos(4+4)/arctan(4*5)^((2+5)+2)>6"
 funcname2func_dict=get_funcname2func_dict()
+funcname2func_dict["+"]=operator.add
+funcname2func_dict["-"]=operator.sub
+funcname2func_dict["*"]=operator.mul
+funcname2func_dict["/"]=operator.truediv
+funcname2func_dict["^"]=operator.pow
+funcname2func_dict["<"]=operator.lt
+funcname2func_dict[">"]=operator.gt
+
+
 tokens =mtok(eqstr)
 stack = []
 branch = [] 
-
+args=[]
 for tok in tokens:
     toktype=gettoktype(tok)
-    if (toktype==
+    if (toktype=="num"):
+        branch.append(tok)
+    elif (toktype=="operator"):
+        branch.append(tok)
+    elif (toktype=="var"):
+        args.append(tok)
+        branch.append(tok)
+    elif(toktype=="func"):
+        branch.append(tok)
+        stack.append(branch)
+        branch=[]
+    elif(toktype=="oparen"):
+        stack.append(branch)
+        branch=[]
+    elif(toktype=="cparen"):
+        r = str2func(branch)
+        branch=stack.pop()
+        branch.append(r) 
+    print "t", tok
+    print "tt", toktype
+    print "b", branch
+    print "s", stack
+
+        
+print stack
 
