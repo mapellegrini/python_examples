@@ -4,6 +4,7 @@ from re import split as regexsplit
 import math 
 from inspect import getmembers, isbuiltin 
 import operator
+import sys
 
 operators = r"><+()*/^".split()
 delims = r'(>+|<+|\++|[A-Z, a-z]*\(+|\)+|/+|\*+|\^+|)'
@@ -56,6 +57,32 @@ def str2func(mylst):
         print "Returning", result
         return str(result)
 
+
+from math import cos
+
+def defstr2func(fnamestr, defstr):
+    exec(defstr)
+    return
+
+def getvars(eq):
+    return "x"	
+
+def eqstr2func(eq):
+    defstr = "def newfunc(" + ",".join(getvars(eq)) + "):\n\treturn " + eq
+    exec(defstr)
+    return locals()["newfunc"]
+
+
+teq = "cos(2+3*4^(5+6*x))"
+fptr = eqstr2func(teq)
+print (fptr)
+print (fptr(4))
+sys.exit(4)
+
+
+
+###########################################################3
+    
     
 eqstr="5*cos(4+4)/arctan(4*5)^((2+5)+2)>6"
 funcname2func_dict=get_funcname2func_dict()
