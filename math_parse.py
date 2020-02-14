@@ -1,15 +1,14 @@
 #!/usr/bin/python
 
 from re import split as regexsplit
-import math 
+from math import * 
 from inspect import getmembers, isbuiltin 
 import operator
 import sys
 
-operators = r"><+()*/^".split()
-delims = r'(>+|<+|\++|[A-Z, a-z]*\(+|\)+|/+|\*+|\^+|)'
 
 def mtok(equation_str):
+    delims =r'(>+|<+|\++|[A-Z, a-z]*\(|\)|/+|\*+|\^+|)'
     equation_str = equation_str.replace(" ", "")
     tokens=regexsplit(delims, equation_str)
     tokens = [x for x in tokens if x not in ""]
@@ -28,7 +27,8 @@ def isnum(val):
         return False
     return True 
 
-def gettoktype(token):
+def gettoktype(tok):
+    operators = list("><+()*/^")
     if (isnum(tok)):
         return "num"
     elif (tok in operators):
@@ -42,88 +42,35 @@ def gettoktype(token):
     else: #unknown variable 
         return "var" 
 
-def str2func(mylst):
-    print "processing:", mylst
-    hasvar=False
-    for tok in mylst:
-        if (gettoktype(tok)=="var"):
-            hasvar=True
-            break
-    if (hasvar):
-       print mylst        
-    else:
-        eqstr="".join(mylst)
-        result=eval(eqstr)
-        print "Returning", result
-        return str(result)
-
-
-from math import cos
-
-def defstr2func(fnamestr, defstr):
-    exec(defstr)
-    return
-
 def getvars(eq):
-    return "x"	
+    tokens = mtok(eq)
+    variables = [] 
+    for tok in tokens:
+        toktype = gettoktype(tok)
+        #print tok, toktype
+        if (gettoktype(tok) == "var"):
+            variables.append(tok)
+    #print "found variables:", variables
+    return variables
+
 
 def eqstr2func(eq):
     defstr = "def newfunc(" + ",".join(getvars(eq)) + "):\n\treturn " + eq
     exec(defstr)
     return locals()["newfunc"]
 
+if __name__ == "__main__":
+    eq1 = "cos(2+3*4^(5+6*x))"
+    eq2 = "1+2+3+4"
+    eq3 = "sqrt(x+y)"
+    eq4 = "abs(x)"
 
-teq = "cos(2+3*4^(5+6*x))"
-fptr = eqstr2func(teq)
-print (fptr)
-print (fptr(4))
-sys.exit(4)
+    func1=eqstr2func(eq1)
+    func2=eqstr2func(eq2)
+    func3=eqstr2func(eq3)
+    func4=eqstr2func(eq4)
 
-
-
-###########################################################3
-    
-    
-eqstr="5*cos(4+4)/arctan(4*5)^((2+5)+2)>6"
-funcname2func_dict=get_funcname2func_dict()
-funcname2func_dict["+"]=operator.add
-funcname2func_dict["-"]=operator.sub
-funcname2func_dict["*"]=operator.mul
-funcname2func_dict["/"]=operator.truediv
-funcname2func_dict["^"]=operator.pow
-funcname2func_dict["<"]=operator.lt
-funcname2func_dict[">"]=operator.gt
-
-
-tokens =mtok(eqstr)
-stack = []
-branch = [] 
-args=[]
-for tok in tokens:
-    toktype=gettoktype(tok)
-    if (toktype=="num"):
-        branch.append(tok)
-    elif (toktype=="operator"):
-        branch.append(tok)
-    elif (toktype=="var"):
-        args.append(tok)
-        branch.append(tok)
-    elif(toktype=="func"):
-        branch.append(tok)
-        stack.append(branch)
-        branch=[]
-    elif(toktype=="oparen"):
-        stack.append(branch)
-        branch=[]
-    elif(toktype=="cparen"):
-        r = str2func(branch)
-        branch=stack.pop()
-        branch.append(r) 
-    print "t", tok
-    print "tt", toktype
-    print "b", branch
-    print "s", stack
-
-        
-print stack
-
+    print func1(0)
+    print func2()
+    print func3(2,7)
+    print func4(-4)
