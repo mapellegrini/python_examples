@@ -54,10 +54,14 @@ def getvars(eq):
     return variables
 
 
-def eqstr2func(eq):
-    defstr = "def newfunc(" + ",".join(getvars(eq)) + "):\n\treturn " + eq
+def eqstr2func(eq, forceparam=False):
+    params = getvars(eq)
+    if (forceparam and not params):
+        params = ["x"]
+    defstr = "def newfunc(" + ",".join(params) + "):\n\treturn " + eq
     exec(defstr)
     return locals()["newfunc"]
+
 
 if __name__ == "__main__":
     eq1 = "cos(2+3*4^(5+6*x))"

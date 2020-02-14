@@ -26,7 +26,7 @@ args = parser.parse_args()
 if (args.f == ""):
   func = piover4
 else:
-  func = eqstr2func(args.f)
+  func = eqstr2func(args.f, forceparam=True)
 
 val = simpson(func, args.s, args.e, args.n) 
 print val 
