@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python -B
 
 from re import split as regexsplit
 from math import * 
@@ -48,7 +48,7 @@ def getvars(eq):
     for tok in tokens:
         toktype = gettoktype(tok)
         #print tok, toktype
-        if (gettoktype(tok) == "var"):
+        if (gettoktype(tok) == "var") and (variables.count(tok) == 0):
             variables.append(tok)
     #print "found variables:", variables
     return variables

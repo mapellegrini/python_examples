@@ -1,9 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python -B
 
+from math_parse import eqstr2func
 import numpy 
 import argparse
-import math
-import math_parse
 
 def piover4(x):
   return math.sqrt(1-x*x)
@@ -17,10 +16,10 @@ def simpson(func, start, end, steps):
   return area 
 
 parser = argparse.ArgumentParser(description='Calculate the integral of a function using Simpson\'s method')
-parser.add_argument('-n', type=float, required=False, default=0.0, help="The starting value for the definite integral. If none is given, will default to 0.0")
-parser.add_argument('-n', type=float, required=False, default=1.0, help="The ending value for the definte intgral. If none is given, will default to 1.0")
+parser.add_argument('-s', type=float, required=False, default=0.0, help="The starting value for the definite integral. If none is given, will default to 0.0")
+parser.add_argument('-e', type=float, required=False, default=1.0, help="The ending value for the definte intgral. If none is given, will default to 1.0")
 parser.add_argument('-n', type=int, required=False, default=10, help="Number of steps to use. If none is given, will default to 10")
-parser.add_argument('-f', required=False, default="", help="The function to integrate. If none is given, will default to sqrt(1-x*x)")
+parser.add_argument('-f', required=False, default="", help="The function to integrate. (Must contain exactly one variable.) If none is given, will default to sqrt(1-x*x)")
 args = parser.parse_args()
 
 if (args.f == ""):
@@ -31,8 +30,5 @@ else:
 val = simpson(func, args.s, args.e, args.n) 
 print val 
 
-
-#pi = 4.0 * simpson(piover4, 0.0, 1.0, args.n)
-#print "Pi = ", pi
 
 
