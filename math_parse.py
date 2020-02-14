@@ -8,7 +8,7 @@ import sys
 
 
 def mtok(equation_str):
-    delims =r'(>+|<+|\++|[A-Z, a-z]*\(|\)|/+|\*+|\^+|)'
+    delims =r'(>+|<+|\++|[A-Z, a-z]*\(|\)|/+|\*|\^+|-|)'
     equation_str = equation_str.replace(" ", "")
     tokens=regexsplit(delims, equation_str)
     tokens = [x for x in tokens if x not in ""]
@@ -28,7 +28,7 @@ def isnum(val):
     return True 
 
 def gettoktype(tok):
-    operators = list("><+()*/^")
+    operators = list("><+-()*/^")
     if (isnum(tok)):
         return "num"
     elif (tok in operators):
@@ -47,10 +47,10 @@ def getvars(eq):
     variables = [] 
     for tok in tokens:
         toktype = gettoktype(tok)
-        #print tok, toktype
+        print tok, toktype
         if (gettoktype(tok) == "var") and (variables.count(tok) == 0):
             variables.append(tok)
-    #print "found variables:", variables
+    print "found variables:", variables
     return variables
 
 
