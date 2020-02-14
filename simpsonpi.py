@@ -1,15 +1,16 @@
 #!/usr/bin/python -B
 
+from math import sqrt
 from math_parse import eqstr2func
-import numpy 
+from numpy import arange
 import argparse
 
 def piover4(x):
-  return math.sqrt(1-x*x)
+  return sqrt(1-x*x)
 
 def simpson(func, start, end, steps):
   width = (end-start) / steps
-  xvals = numpy.arange(start, end, width)
+  xvals = arange(start, end, width)
   area = 0.0  
   for a in range (0, steps-1):
     area +=  width * (func(xvals[a]) + func(xvals[a+1]))/2 
@@ -19,7 +20,7 @@ parser = argparse.ArgumentParser(description='Calculate the integral of a functi
 parser.add_argument('-s', type=float, required=False, default=0.0, help="The starting value for the definite integral. If none is given, will default to 0.0")
 parser.add_argument('-e', type=float, required=False, default=1.0, help="The ending value for the definte intgral. If none is given, will default to 1.0")
 parser.add_argument('-n', type=int, required=False, default=10, help="Number of steps to use. If none is given, will default to 10")
-parser.add_argument('-f', required=False, default="", help="The function to integrate. (Must contain exactly one variable.) If none is given, will default to sqrt(1-x*x)")
+parser.add_argument('-f', required=False, default="", help="The function to integrate. (Must contain exactly one variable.) If none is given, will default to sqrt(1-x*x), which if integrated from 0 to 1 will give pi/4")
 args = parser.parse_args()
 
 if (args.f == ""):
