@@ -47,10 +47,10 @@ def getvars(eq):
     variables = [] 
     for tok in tokens:
         toktype = gettoktype(tok)
-        print tok, toktype
+        #print tok, toktype
         if (gettoktype(tok) == "var") and (variables.count(tok) == 0):
             variables.append(tok)
-    print "found variables:", variables
+    #print "found variables:", variables
     return variables
 
 
