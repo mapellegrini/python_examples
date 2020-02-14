@@ -54,10 +54,10 @@ def getvars(eq):
     return variables
 
 
-def eqstr2func(eq, forceparam=False):
+def eqstr2func(eq, forceparam=0):
     params = getvars(eq)
     if (forceparam and not params):
-        params = ["x"]
+        params = [chr(x) for x in range(ord('a'), ord('a') + forceparam)]
     defstr = "def newfunc(" + ",".join(params) + "):\n\treturn " + eq
     exec(defstr)
     return locals()["newfunc"]

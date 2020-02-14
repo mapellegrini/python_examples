@@ -4,16 +4,24 @@ from math import sqrt
 from math_parse import eqstr2func
 from numpy import arange
 import argparse
+import sys
 
 def piover4(x):
   return sqrt(1-x*x)
 
 def simpson(func, start, end, steps):
   width = (end-start) / steps
-  xvals = arange(start, end, width)
+  xvals = arange(start, end+width, width)
   area = 0.0  
-  for a in range (0, steps-1):
-    area +=  width * (func(xvals[a]) + func(xvals[a+1]))/2 
+  for a in range (0, steps):
+    try:
+      area +=  width * (func(xvals[a]) + func(xvals[a+1]))/2
+    except ValueError:
+      print ("Oops! ValueError:")
+      print ("Step #:", a)
+      print ("Val #1:", xvals[a])
+      print ("Val #2", xvals[a+1])
+      sys.exit(3)
   return area 
 
 parser = argparse.ArgumentParser(description='Calculate the integral of a function using Simpson\'s method')
@@ -26,7 +34,7 @@ args = parser.parse_args()
 if (args.f == ""):
   func = piover4
 else:
-  func = eqstr2func(args.f, forceparam=True)
+  func = eqstr2func(args.f, forceparam=1)
 
 val = simpson(func, args.s, args.e, args.n) 
 print val 
